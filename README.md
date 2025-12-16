@@ -2,24 +2,30 @@
 
 A powerful VS Code extension that provides intelligent code review capabilities with both AI-powered analysis and offline rule-based validation. Get comprehensive code feedback that combines the depth of AI reasoning with the reliability of predefined best practices.
 
+CodeSentinel is available on the VS Code Marketplace: [CodeSentinel – Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=SoumyaGupta.codesentinel).
+
 ## 🚀 Features
 
 ### AI-Powered Code Review
+
 - **OpenAI Integration**: Leverage GPT models for deep code analysis and suggestions
 - **Intelligent Insights**: Get context-aware recommendations for code quality, architecture, and best practices
 - **Configurable Models**: Support for various OpenAI models (GPT-4, GPT-3.5-turbo, etc.)
 
 ### Offline Fallback System
+
 - **Rule-Based Analysis**: Comprehensive offline code review using predefined rules
 - **No Internet Required**: Works completely offline when AI services are unavailable
 - **Instant Feedback**: Fast analysis without API calls or waiting times
 
 ### Multi-Language Support
+
 - **Frontend**: React, Flutter, Next.js, Angular
 - **Backend**: Node.js, Express, NestJS, Spring Boot, Go, Java, C++
 - **Full Stack**: REST API, GraphQL, MongoDB, PostgreSQL
 
 ### Comprehensive Analysis Areas
+
 - **Code Quality**: Clean code principles, readability, maintainability
 - **Architecture**: Separation of concerns, design patterns, scalability
 - **Security**: Data validation, vulnerability prevention
@@ -28,14 +34,24 @@ A powerful VS Code extension that provides intelligent code review capabilities 
 
 ## 📦 Installation
 
-1. Download the `.vsix` file from the releases
+### From VS Code Marketplace (recommended)
+
+1. Open VS Code
+2. Go to the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+3. Search for `CodeSentinel` or run `ext install SoumyaGupta.codesentinel`
+4. Click **Install**
+
+### From `.vsix` (offline/manual)
+
+1. Download the `.vsix` file from the GitHub Releases page
 2. Open VS Code
-3. Go to Extensions → Install from VSIX
+3. Go to **Extensions → Install from VSIX**
 4. Select the downloaded file
 
 ## ⚙️ Configuration
 
 ### OpenAI Setup (Optional)
+
 Configure your OpenAI API key for AI-powered reviews:
 
 ```json
@@ -46,12 +62,14 @@ Configure your OpenAI API key for AI-powered reviews:
 ```
 
 ### Settings
+
 - **API Key**: Your OpenAI API key (machine-scoped for security)
 - **Model**: Choose your preferred OpenAI model (default: gpt-4o-mini)
 
 ## 🛠️ Usage
 
 ### Review Current File
+
 1. Open any code file in VS Code
 2. Use Command Palette: `Ctrl+Shift+P` (Mac: `Cmd+Shift+P`)
 3. Run: `CodeSentinel: Review Current File`
@@ -70,6 +88,7 @@ The extension uses a smart two-tier approach prioritizing reliability:
 ## 📋 Review Output
 
 ### AI Review Format
+
 ```
 ## Summary
 
@@ -84,6 +103,7 @@ The extension uses a smart two-tier approach prioritizing reliability:
 ```
 
 ### Offline Review Format
+
 ```
 ## 🔍 Offline Multi-File Code Review
 
@@ -101,12 +121,14 @@ The extension uses a smart two-tier approach prioritizing reliability:
 ## 🔧 Supported Languages & Frameworks
 
 ### Frontend
+
 - **React**: Component design, hooks usage, state management
 - **Flutter**: Widget architecture, state management, performance
 - **Next.js**: SSR/SSG patterns, API routes, optimization
 - **Angular**: Component architecture, dependency injection
 
 ### Backend
+
 - **Node.js/Express**: Middleware patterns, error handling, security
 - **NestJS**: Module structure, dependency injection, decorators
 - **Spring Boot**: Layered architecture, bean management, REST
@@ -115,6 +137,7 @@ The extension uses a smart two-tier approach prioritizing reliability:
 - **C++**: Memory management, RAII, performance optimization
 
 ### Databases & APIs
+
 - **REST API**: HTTP methods, status codes, error responses
 - **GraphQL**: Schema design, resolver patterns, performance
 - **MongoDB**: Schema design, indexing, aggregation
@@ -137,6 +160,7 @@ src/
 ## 📊 Rule Categories
 
 ### Severity Levels
+
 - **BLOCKER**: Critical issues that prevent proper functioning
 - **CRITICAL**: High-impact issues affecting reliability
 - **MAJOR**: Important improvements for quality
@@ -144,6 +168,7 @@ src/
 - **INFO**: Informational suggestions
 
 ### Quality Principles
+
 - **SRP**: Single Responsibility Principle
 - **DRY**: Don't Repeat Yourself
 - **SOLID**: Object-oriented design principles
@@ -160,12 +185,14 @@ src/
 ## 🤝 Contributing
 
 ### Adding New Rules
+
 1. Create rule files in appropriate language/framework directories
 2. Follow the `ReviewRule` interface structure
 3. Add tests for rule validation
 4. Update the rules index
 
 ### Rule Structure
+
 ```typescript
 {
   id: "UNIQUE-RULE-ID",
@@ -182,22 +209,26 @@ src/
 ## 📝 Development
 
 ### Prerequisites
+
 - Node.js 16+
 - VS Code
 - TypeScript
 
 ### Setup
+
 ```bash
 npm install
 npm run compile
 ```
 
 ### Testing
+
 ```bash
 npm run watch  # For development
 ```
 
 ### Building
+
 ```bash
 npm run vscode:prepublish  # Creates .vsix file
 ```
