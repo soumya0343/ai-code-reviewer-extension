@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { buildPrompt } from "../services/promptBuilder";
 import { runAIReview } from "../services/aiService";
-import { CodeScope, ReviewContext } from "../models/reviewContext";
+import { ReviewScope, ReviewContext } from "../types/reviewContext";
+import { ReviewedFile } from "../types/reviewedFile";
 
 export async function reviewCurrentFile() {
   const editor = vscode.window.activeTextEditor;
@@ -26,21 +26,30 @@ export async function reviewCurrentFile() {
       "GraphQL",
       "MongoDB",
       "PostgreSQL",
+      "Dart",
+      "Flutter",
+      "Go",
+      "Java",
+      "Cpp",
     ],
     { canPickMany: true, placeHolder: "Select tech stack" }
   );
   if (!techStack?.length) return;
 
   const context: ReviewContext = {
-    scope: scope as CodeScope,
+    scope: scope as ReviewScope,
     techStack,
     language: editor.document.languageId,
   };
 
   const code = editor.document.getText();
-  const prompt = buildPrompt(code, context);
+  const currentFile: ReviewedFile = {
+    path: vscode.workspace.asRelativePath(editor.document.uri),
+    language: editor.document.languageId,
+    content: code,
+  };
 
-  const review = await runAIReview(prompt, code, editor.document.languageId);
+  const review = await runAIReview([currentFile], context);
 
   const doc = await vscode.workspace.openTextDocument({
     content: review,

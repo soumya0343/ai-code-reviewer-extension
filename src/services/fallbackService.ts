@@ -1,39 +1,34 @@
-export function runFallbackReview(code: string, language: string): string {
-  const issues: string[] = [];
+import { ReviewedFile } from "../types/reviewedFile";
+import { ReviewContext } from "../types/reviewContext";
+import { runRulesOnFiles } from "../engine/ruleRunner";
 
-  if (code.split("\n").length > 300) {
-    issues.push(
-      "- [Severity: MEDIUM] Large file detected; consider modularization."
-    );
-  }
+export function runFallbackReview(
+  files: ReviewedFile[],
+  context: ReviewContext
+): string {
+  const findings = runRulesOnFiles(files, context);
 
-  if (!code.includes("try") && language !== "python") {
-    issues.push("- [Severity: MEDIUM] No error handling detected.");
-  }
-
-  if (/console\.log|print\(/.test(code)) {
-    issues.push("- [Severity: LOW] Debug logs present.");
-  }
-
-  if (/password|token|secret/i.test(code)) {
-    issues.push("- [Severity: HIGH] Possible hardcoded secret.");
-  }
-
-  if (issues.length === 0) {
-    issues.push("- No major issues detected by fallback rules.");
+  if (findings.length === 0) {
+    return "🟢 No violations detected for selected context.";
   }
 
   return `
-  ## ⚠️ Offline Code Review (Fallback)
-  
-  Gemini could not be used. This review is based on static analysis.
-  
-  ## Findings
-  ${issues.join("\n")}
-  
-  ## Recommendations
-  - Improve error handling
-  - Improve modularity
-  - Add tests
-  `;
+## 🔍 Offline Multi-File Code Review
+
+**Files Reviewed:** ${files.length}
+**Language:** ${context.language}
+**Scope:** ${context.scope}
+**Tech Stack:** ${context.techStack.join(", ")}
+
+${findings
+  .map(
+    (f) => `
+- **${f.rule.severity}** [${f.rule.id}] (${f.filePath})
+  - ${f.rule.message}
+  - Principle: ${f.rule.principle}
+  - Rationale: ${f.rule.rationale}
+`
+  )
+  .join("\n")}
+`;
 }

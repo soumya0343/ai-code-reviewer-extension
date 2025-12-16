@@ -2,34 +2,36 @@
   "name": "ai-code-reviewer",
   "displayName": "AI Code Reviewer",
   "version": "0.0.1",
-  "description": "AI-powered code review for the current file.",
+  "description": "Offline-first code review with AI enhancement. Fast rule-based analysis with optional AI-powered insights for comprehensive code quality feedback.",
   "main": "./out/extension.js",
   "engines": {
     "vscode": "^1.80.0"
   },
-  "activationEvents": [
-    "onCommand:aiCodeReviewer.reviewFile"
-  ],
+  "activationEvents": [],
   "contributes": {
     "commands": [
       {
         "command": "aiCodeReviewer.reviewFile",
         "title": "AI: Review Current File"
+      },
+      {
+        "command": "aiCodeReviewer.reviewWorkspace",
+        "title": "AI: Review Workspace"
       }
     ],
     "configuration": {
       "title": "AI Code Reviewer",
       "properties": {
-        "aiCodeReviewer.geminiApiKey": {
+        "aiCodeReviewer.openaiApiKey": {
           "type": "string",
-          "default": "AIzaSyCNSlrV0G8Dg8AVxAUQgL9DJPZXzF5B7K4",
-          "description": "Google Gemini API Key",
+          "default": "",
+          "description": "OpenAI API key for AI-powered code analysis. Optional - extension works offline with rule-based reviews.",
           "scope": "machine"
         },
-        "aiCodeReviewer.geminiModel": {
+        "aiCodeReviewer.openaiModel": {
           "type": "string",
-          "default": "gemini-1.5-flash",
-          "description": "Gemini model to use"
+          "default": "gpt-4o-mini",
+          "description": "OpenAI model for AI code review (gpt-4o-mini, gpt-4, gpt-3.5-turbo, etc.)"
         }
       }
     }
@@ -39,12 +41,14 @@
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile"
   },
-  "dependencies": {
-    "@google/generative-ai": "^0.24.1"
-  },
   "devDependencies": {
     "@types/node": "^25.0.2",
+    "@types/node-fetch": "^2.6.13",
     "typescript": "^5.9.3",
     "vscode": "^1.1.37"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0",
+    "openai": "^6.13.0"
   }
 }

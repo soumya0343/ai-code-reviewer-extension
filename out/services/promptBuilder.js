@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildPrompt = buildPrompt;
-function buildPrompt(code, context) {
+function buildPrompt(files, context) {
     return `
 You are a senior software engineer performing a professional code review.
 
@@ -35,10 +35,11 @@ Respond EXACTLY in this format:
 
 ## Suggested Refactor (if any)
 
-CODE:
+${files.map(file => `FILE: ${file.path}
+\`\`\`${file.language}
+${file.content}
 \`\`\`
-${code}
-\`\`\`
+`).join('\n\n')}
 `;
 }
 //# sourceMappingURL=promptBuilder.js.map

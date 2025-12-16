@@ -1,6 +1,7 @@
-import { ReviewContext } from "../models/reviewContext";
+import { ReviewContext } from "../types/reviewContext";
+import { ReviewedFile } from "../types/reviewedFile";
 
-export function buildPrompt(code: string, context: ReviewContext): string {
+export function buildPrompt(files: ReviewedFile[], context: ReviewContext): string {
   return `
 You are a senior software engineer performing a professional code review.
 
@@ -34,9 +35,10 @@ Respond EXACTLY in this format:
 
 ## Suggested Refactor (if any)
 
-CODE:
+${files.map(file => `FILE: ${file.path}
+\`\`\`${file.language}
+${file.content}
 \`\`\`
-${code}
-\`\`\`
+`).join('\n\n')}
 `;
 }

@@ -35,7 +35,6 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reviewCurrentFile = reviewCurrentFile;
 const vscode = __importStar(require("vscode"));
-const promptBuilder_1 = require("../services/promptBuilder");
 const aiService_1 = require("../services/aiService");
 async function reviewCurrentFile() {
     const editor = vscode.window.activeTextEditor;
@@ -56,6 +55,11 @@ async function reviewCurrentFile() {
         "GraphQL",
         "MongoDB",
         "PostgreSQL",
+        "Dart",
+        "Flutter",
+        "Go",
+        "Java",
+        "Cpp",
     ], { canPickMany: true, placeHolder: "Select tech stack" });
     if (!techStack?.length)
         return;
@@ -65,8 +69,12 @@ async function reviewCurrentFile() {
         language: editor.document.languageId,
     };
     const code = editor.document.getText();
-    const prompt = (0, promptBuilder_1.buildPrompt)(code, context);
-    const review = await (0, aiService_1.runAIReview)(prompt, code, editor.document.languageId);
+    const currentFile = {
+        path: vscode.workspace.asRelativePath(editor.document.uri),
+        language: editor.document.languageId,
+        content: code,
+    };
+    const review = await (0, aiService_1.runAIReview)([currentFile], context);
     const doc = await vscode.workspace.openTextDocument({
         content: review,
         language: "markdown",

@@ -34,14 +34,10 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
-exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
+const reviewWorkspace_1 = require("./commands/reviewWorkspace");
 const reviewFile_1 = require("./commands/reviewFile");
-function activate(context) {
-    context.subscriptions.push(vscode.commands.registerCommand("aiCodeReviewer.reviewFile", reviewFile_1.reviewCurrentFile));
-    console.log("AI Code Reviewer extension activated");
-}
-function deactivate(context) {
-    console.log("AI Code Reviewer extension deactivated");
+function activate(ctx) {
+    ctx.subscriptions.push(vscode.commands.registerCommand("aiCodeReviewer.reviewWorkspace", reviewWorkspace_1.reviewWorkspace), vscode.commands.registerCommand("aiCodeReviewer.reviewFile", reviewFile_1.reviewCurrentFile));
 }
 //# sourceMappingURL=extension.js.map
